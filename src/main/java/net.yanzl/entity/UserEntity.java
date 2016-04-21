@@ -1,8 +1,11 @@
 package net.yanzl.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.hibernate.annotations.GeneratorType;
+
+import javax.persistence.*;
 import java.lang.String;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *用户基本信息表
@@ -15,6 +18,10 @@ public class UserEntity{
     private String userName;
     private String password;
     private String email;
+    private Set<ArticleEntity> articles = new HashSet<ArticleEntity>();
+
+    public UserEntity() {
+    }
 
     /**
      *
@@ -27,7 +34,9 @@ public class UserEntity{
         this.password = password;
         this.email = email;
     }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId")
     public long getUserId() {
         return userId;
     }
@@ -36,6 +45,7 @@ public class UserEntity{
         this.userId = userId;
     }
 
+    @Column(name = "userName",nullable = false,unique = true,length = 30)
     public String getUserName() {
         return userName;
     }
@@ -44,6 +54,7 @@ public class UserEntity{
         this.userName = userName;
     }
 
+    @Column(name = "password",nullable = false,length = 30)
     public String getPassword() {
         return password;
     }
@@ -52,11 +63,24 @@ public class UserEntity{
         this.password = password;
     }
 
+    @Column(name = "email",nullable = false,unique = true)
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * 定义用户和文章的关系,一对多的关系
+     */
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    public Set<ArticleEntity> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(Set<ArticleEntity> articles) {
+        this.articles = articles;
     }
 }

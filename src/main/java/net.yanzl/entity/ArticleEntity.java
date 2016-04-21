@@ -1,7 +1,6 @@
 package net.yanzl.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.lang.String;
 import java.util.Date;
 
@@ -14,18 +13,25 @@ public class ArticleEntity{
     private long articleId;
     private String articleName;
     private String articleContent;
-    private Date time;
+    private String time;
     private String auther;
     private int del;
+    private UserEntity user ;
+    private CateEntity cate;
 
-    public ArticleEntity(String articleName,String articleContent,Date time,String auther,int del){
+    public ArticleEntity(){}
+
+    public ArticleEntity(String articleName,String articleContent,String time,String auther){
         this.articleName = articleName;
         this.articleContent = articleContent;
         this.time = time;
         this.auther = auther;
-        this.del = del;
+        this.del = 0;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "articleId")
     public long getArticleId() {
         return articleId;
     }
@@ -34,6 +40,7 @@ public class ArticleEntity{
         this.articleId = articleId;
     }
 
+    @Column(name = "articleName",nullable = false)
     public String getArticleName() {
         return articleName;
     }
@@ -42,22 +49,22 @@ public class ArticleEntity{
         this.articleName = articleName;
     }
 
+    @Column(name = "articleContent",nullable = false,length = 3000)
     public String getArticleContent() {return articleContent;}
 
     public void setArticleContent(String articleContent) {this.articleContent = articleContent;}
 
-    public Date getTime() { return time;}
+    @Column(name = "time",nullable = false)
+    public String getTime() { return time;}
 
-    public void setTime(Date time) {this.time = time;}
+    public void setTime(String time) {this.time = time;}
 
-    public String getAuther() {
-        return auther;
-    }
+    @Column(name = "auther",nullable = false)
+    public String getAuther() {return auther;}
 
-    public void setAuther(String auther) {
-        this.auther = auther;
-    }
+    public void setAuther(String auther) {this.auther = auther;}
 
+    @Column(name = "del",nullable = false)
     public int getDel() {
         return del;
     }
@@ -65,4 +72,30 @@ public class ArticleEntity{
     public void setDel(int del) {
         this.del = del;
     }
+
+    /**
+     * 定义文章和用户之间的关系,一对一的关系
+     */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "uid")
+    public UserEntity getUser(){
+        return user;
+    }
+    /**
+     * 定义文章和文章分类之间的关系,一对一的关系
+     */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="cid")
+    public CateEntity getCate(){
+        return cate;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public void setCate(CateEntity cate) {
+        this.cate = cate;
+    }
+
 }

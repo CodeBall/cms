@@ -28,7 +28,7 @@ public class CateDaoTest {
      */
     @Test
     public void save(){
-        CateEntity Cate = new CateEntity("Python学习");
+        CateEntity Cate = new CateEntity("PHP学习");
         cate.save(Cate);
         System.out.println(Cate.getCateId());
     }
@@ -38,7 +38,7 @@ public class CateDaoTest {
      */
     @Test
     public void delete(){
-        cate.delete((long) 3);
+        cate.delete((long)2);
         System.out.println("true");
     }
     /**

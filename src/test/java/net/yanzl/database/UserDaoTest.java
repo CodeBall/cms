@@ -75,7 +75,7 @@ public class UserDaoTest {
      */
     @Test
     public void deleteUser(){
-        dao.delete((long) 6);
+        dao.delete((long) 2);
         System.out.println("1");
     }
 
@@ -83,7 +83,7 @@ public class UserDaoTest {
      * 测试修改用户信息
      */
     @Test
-    public void ipdateUser(){
+    public void updateUser(){
         UserEntity user = dao.findOne((long) 1);
         user.setEmail("yanzl.net@126.com");
         dao.save(user);

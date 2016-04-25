@@ -22,6 +22,16 @@ public class CateEntity{
         this.parentId = 0;
         this.date = "1970-01-01 00:00:00";
     }
+    public CateEntity(String cateName, String date){
+        this.cateName = cateName;
+        this.parentId = 0;
+        this.date = date;
+    }
+    public CateEntity(String cateName, String date, long parentId){
+        this.cateName = cateName;
+        this.parentId = parentId;
+        this.date = date;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +59,7 @@ public class CateEntity{
      * 文章类型类和文章类的关系:One-to-Many
      */
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "cate")
+    @OrderBy("cid")
     public Set<ArticleEntity> getArticle() {
         return article;
     }

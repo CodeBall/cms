@@ -76,9 +76,11 @@ public class UserEntity{
      * 定义用户和文章的关系,一对多的关系
      */
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    @OrderBy("uid")
     public Set<ArticleEntity> getArticles() {
         return articles;
     }
+
 
     public void setArticles(Set<ArticleEntity> articles) {
         this.articles = articles;

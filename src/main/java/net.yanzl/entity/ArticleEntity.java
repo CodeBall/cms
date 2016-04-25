@@ -14,18 +14,16 @@ public class ArticleEntity{
     private String articleName;
     private String articleContent;
     private String time;
-    private String auther;
     private int del;
     private UserEntity user ;
     private CateEntity cate;
 
     public ArticleEntity(){}
 
-    public ArticleEntity(String articleName,String articleContent,String time,String auther){
+    public ArticleEntity(String articleName,String articleContent,String time){
         this.articleName = articleName;
         this.articleContent = articleContent;
         this.time = time;
-        this.auther = auther;
         this.del = 0;
     }
 
@@ -59,11 +57,6 @@ public class ArticleEntity{
 
     public void setTime(String time) {this.time = time;}
 
-    @Column(name = "auther",nullable = false)
-    public String getAuther() {return auther;}
-
-    public void setAuther(String auther) {this.auther = auther;}
-
     @Column(name = "del",nullable = false)
     public int getDel() {
         return del;
@@ -74,9 +67,9 @@ public class ArticleEntity{
     }
 
     /**
-     * 定义文章和用户之间的关系,一对一的关系
+     * 定义文章和用户之间的关系,一对多的关系
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "uid")
     public UserEntity getUser(){
         return user;
@@ -84,8 +77,8 @@ public class ArticleEntity{
     /**
      * 定义文章和文章分类之间的关系,一对一的关系
      */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="cid")
+    @ManyToOne
+    @JoinColumn(name = "cid")
     public CateEntity getCate(){
         return cate;
     }

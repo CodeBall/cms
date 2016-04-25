@@ -21,9 +21,8 @@
         <property name="cache" value="false" />
     </bean>
 
+    <mvc:annotation-driven />
     <context:annotation-config />
-    <!--不加annotation-driven会导致控制器失效-->
-    <mvc:annotation-driven/>
     <context:property-placeholder location="classpath:config.properties" />
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
@@ -85,5 +84,5 @@
 
     <context:component-scan base-package="net.yanzl.controller"/>
     <context:component-scan base-package="net.yanzl.service" />
-    <mvc:resources mapping="/static/**" location="/static/" />
+
 </beans>

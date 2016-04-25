@@ -10,6 +10,5 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by yzl on 16-4-17.
  */
 @Repository
-@Transactional
 public interface CateRepository extends JpaRepository<CateEntity,Long> {
 }

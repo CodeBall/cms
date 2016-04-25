@@ -2,7 +2,6 @@ package net.yanzl.service;
 
 
 import net.yanzl.entity.ArticleEntity;
-import net.yanzl.entity.UserEntity;
 import org.springframework.data.domain.Page;
 import java.util.Map;
 
@@ -11,10 +10,9 @@ import java.util.Map;
  * Created by xqq on 16-4-17.
  */
 public interface IArticleService {
-    ArticleEntity addArticle(String articleName,String articleContent,String time,String auther,UserEntity user);
+    ArticleEntity addArticle(String articleName,String articleContent,String time,Long uid,Long cid);
     boolean deleteArticle(Long articleId);
-    boolean updateArticle(Map<String,String>map,ArticleEntity article);
-    Page<ArticleEntity> findAll(int start,int num);
+    boolean updateArticle(Map<String,String>map);
+    Page<ArticleEntity> findAll(int page,int size);
     ArticleEntity findOne(Long articleId);
-    Long articleCount(Long id);
 }

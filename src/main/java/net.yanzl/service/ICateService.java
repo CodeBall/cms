@@ -1,9 +1,7 @@
 package net.yanzl.service;
 
 import net.yanzl.entity.CateEntity;
-
-import java.util.Date;
-import java.util.List;
+import org.springframework.data.domain.Page;
 import java.util.Map;
 
 /**
@@ -11,9 +9,10 @@ import java.util.Map;
  * Created by xqq on 16-4-17.
  */
 public interface ICateService {
-    CateEntity addCate(String cateName,Long parent,Date date);
+    CateEntity addCate(String cateName,String date,Long parent);
+    CateEntity addCate(String cateName,String date);
+    CateEntity addCate(String cateName);
     boolean deleteCate(Long cateId);
-    boolean updateCate(Map<String,String>map,CateEntity cate);
-    List<CateEntity> findAll();
-    CateEntity findOne(Long cateId);
+    boolean updateCate(Map<String,String>map);
+    Page<CateEntity> findAll(int page,int size);
 }

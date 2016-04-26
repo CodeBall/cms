@@ -86,7 +86,7 @@ public class ArticleController {
      * @return
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public int addArticle(HttpServletRequest request){
+    public boolean addArticle(HttpServletRequest request){
         HttpSession session = request.getSession();
 
         String articleName = request.getParameter("articleName");
@@ -103,9 +103,9 @@ public class ArticleController {
         ArticleEntity article = articleService.addArticle(articleName, articleContent, date, uid, cid);
 
         if(article.getArticleId()>0)
-            return 1;
+            return true;
         else
-            return 0;
+            return false;
     }
 
     /**
@@ -114,24 +114,30 @@ public class ArticleController {
      * @return
      */
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
-    public int deleteArticle(@PathVariable Long id){
+    public boolean deleteArticle(@PathVariable Long id){
         if(articleService.deleteArticle(id))
-            return 1;
+            return true;
         else
-            return 0;
+            return false;
     }
 
+    /**
+     * 修改文章
+     * @param id
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/update/{id}",method = RequestMethod.POST)
-    public int updateArticle(@PathVariable Long id,HttpServletRequest request){
+    public boolean updateArticle(@PathVariable Long id,HttpServletRequest request){
         Map<String,String> map = new HashMap<String, String>();
         map.put("id",String.valueOf(id));
         map.put("name",request.getParameter("name"));
         map.put("content",request.getParameter("content"));
 
         if(articleService.updateArticle(map))
-            return 1;
+            return true;
         else
-            return 0;
+            return false;
     }
 
 }

@@ -1,6 +1,7 @@
 package net.yanzl.service;
 
 import net.yanzl.entity.UserEntity;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Map;
 public interface IUserService {
     Boolean login(String email,String password);
     UserEntity addUser(String userName,String password,String email);
-    Boolean updateUser(Map<String,String>map,UserEntity user);
-    List<UserEntity> findAll();
+    Boolean updateUser(Map<String,String>map);
+    Page<UserEntity> findAll(int page,int size);
+    boolean deleteUser(Long id);
 }

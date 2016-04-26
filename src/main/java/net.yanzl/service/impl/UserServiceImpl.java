@@ -5,10 +5,12 @@ import net.yanzl.repository.UserRepository;
 import net.yanzl.service.IUserService;
 import net.yanzl.util.EncryptHelp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
+import java.lang.Boolean;
 
 /**
  * Created by xqq on 16-4-17.
@@ -58,10 +60,12 @@ public class UserServiceImpl implements IUserService {
     /**
      * 修改用户信息
      * @param map
-     * @param user
      * @return
      */
-    public Boolean updateUser(Map<String,String> map,UserEntity user){
+    public Boolean updateUser(Map<String,String> map){
+        String id = map.get("id");
+        Long userId = Long.parseLong(id);
+        UserEntity user = userRepository.findOne(userId);
         if(map.containsKey("userName")){
             String userName = map.get("userName");
             user.setUserName(userName);
@@ -85,7 +89,17 @@ public class UserServiceImpl implements IUserService {
      * 查询所有用户信息
      * @return
      */
-    public List<UserEntity> findAll(){
-        return userRepository.findAll();
+    public Page<UserEntity> findAll(int page,int size){
+        Page<UserEntity> list = userRepository.findAll(new PageRequest(page,size));
+        return list;
+    }
+
+    /**
+     * 删除用户
+     */
+    public boolean deleteUser(Long id){
+        userRepository.delete(id);
+
+        return true;
     }
 }

@@ -11,7 +11,7 @@ import java.util.Map;
  * Created by xqq on 16-4-17.
  */
 public interface IUserService {
-    Boolean login(String email,String password);
+    UserEntity getOne(String email);
     UserEntity addUser(String userName,String password,String email);
     Boolean updateUser(Map<String,String>map);
     Page<UserEntity> findAll(int page,int size);

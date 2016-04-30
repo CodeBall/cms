@@ -21,24 +21,9 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private UserRepository userRepository;
 
-    /**
-     * 登录验证
-     * @param email
-     * @param password
-     * @return
-     */
-    public Boolean login(String email,String password){
-        if(password == null || email == null || password.length() == 0){
-            return false;
-        }
-
+    public UserEntity getOne(String email){
         UserEntity user = userRepository.getUserByEmail(email);
-
-        if(user == null || user.getPassword() == null)
-            return false;
-        password = EncryptHelp.getPassword(password);
-
-        return password.equals(user.getPassword());
+        return user;
     }
 
     /**

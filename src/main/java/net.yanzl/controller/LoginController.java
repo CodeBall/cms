@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,8 +22,14 @@ public class LoginController {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody void login(HttpServletRequest request){
+    //调用首页
+    @RequestMapping(method = RequestMethod.GET)
+    public String index(){
+        return "register";
+    }
+
+    @RequestMapping(value = "login",method = RequestMethod.POST)
+    public String login(HttpServletRequest request){
         String email = request.getParameter("email");
 
         String password = request.getParameter("password");
@@ -49,6 +54,7 @@ public class LoginController {
         }else {
             //跳转到登录失败页面
         }
+        return "login";
 
     }
 

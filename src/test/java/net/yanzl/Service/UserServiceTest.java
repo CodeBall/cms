@@ -55,8 +55,4 @@ public class UserServiceTest {
         }
     }
 
-    @Test
-    public void login(){
-        System.out.println(userService.login("m@yanzl.net","juebufangqi"));
-    }
 }

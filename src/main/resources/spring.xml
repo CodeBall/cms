@@ -21,9 +21,16 @@
         <property name="cache" value="false" />
     </bean>
 
+    <jpa:repositories base-package="net.yanzl.repository"
+                      entity-manager-factory-ref="entityManagerFactory"
+                      transaction-manager-ref="transactionManager"/>
+
+    <context:component-scan base-package="net.yanzl.controller"/>
+    <context:component-scan base-package="net.yanzl.service" />
     <mvc:annotation-driven />
     <context:annotation-config />
     <context:property-placeholder location="classpath:config.properties" />
+    <mvc:annotation-driven></mvc:annotation-driven>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <!-- access -->
@@ -77,12 +84,5 @@
     </bean>
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
-
-    <jpa:repositories base-package="net.yanzl.repository"
-                      entity-manager-factory-ref="entityManagerFactory"
-                      transaction-manager-ref="transactionManager"/>
-
-    <context:component-scan base-package="net.yanzl.controller"/>
-    <context:component-scan base-package="net.yanzl.service" />
 
 </beans>

@@ -5,6 +5,7 @@ import net.yanzl.service.IUserService;
 import net.yanzl.util.EncryptHelp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -27,9 +28,15 @@ public class LoginController {
     public String index(){
         return "register";
     }
+    //调用登录页面
+    @RequestMapping(value = "login" ,method = RequestMethod.GET)
+    public String login(){
+        return "login";
+    }
 
+    //登录处理
     @RequestMapping(value = "login",method = RequestMethod.POST)
-    public String login(HttpServletRequest request){
+    public String login(ModelMap map,HttpServletRequest request){
         String email = request.getParameter("email");
 
         String password = request.getParameter("password");
@@ -38,6 +45,8 @@ public class LoginController {
 
         if(user == null || user.getPassword() == null){
             //跳转到登录失败页面
+            map.addAttribute("status","用户名或密码不能为空!");
+            return "login";
         }
 
         password = EncryptHelp.getPassword(password);
@@ -51,15 +60,17 @@ public class LoginController {
             session.setAttribute("userName",user.getUserName());
             session.setAttribute("email",user.getEmail());
             //跳转至首页
+            return "index";
         }else {
             //跳转到登录失败页面
+            map.addAttribute("status","用户名或密码错误!");
+            return "login";
         }
-        return "login";
 
     }
 
     @RequestMapping(value = "logout",method = RequestMethod.GET)
-    public void logout(HttpServletRequest request){
+    public String logout(HttpServletRequest request){
         HttpSession session = request.getSession();
 
         session.removeAttribute("userId");
@@ -67,5 +78,6 @@ public class LoginController {
         session.removeAttribute("email");
 
         //跳转至登录页面
+        return "login";
     }
 }

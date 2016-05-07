@@ -26,7 +26,7 @@ public class UserServiceTest {
 
     @Test
     public void save(){
-        UserEntity user = userService.addUser("xiaofang","juebufangqi","xiaofang@126.net");
+        UserEntity user = userService.addUser("yzl","juebufangqi","m@yanzl.net");
         System.out.println(user.getUserId());
     }
 

@@ -14,5 +14,6 @@ public interface IArticleService {
     boolean deleteArticle(Long articleId);
     boolean updateArticle(Map<String,String>map);
     Page<ArticleEntity> findAll(int page,int size);
+    //Page<ArticleEntity> findMine(Long uid,Integer page,Integer size);
     ArticleEntity findOne(Long articleId);
 }

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by xqq on 16-4-16.
  */
 /**
- * User相关DAO
+ * User相关DAO接口
  * Created by yzl on 16-4-16.
  */
 @Repository
@@ -27,9 +27,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      */
     @Query("SELECT u FROM UserEntity u WHERE u.userName = :userName")
     UserEntity getUserByUserName(@Param("userName")String userName);
-    /**
-     * 根据用户id删除用户信息
-     */
-//    @Query("DELETE  FROM UserEntity u WHERE u.userId = :userId")
-//    boolean deleteUserById(@Param("userId")Long userTd);
+
 }

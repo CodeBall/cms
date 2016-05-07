@@ -10,11 +10,11 @@ import net.yanzl.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Map;
 
@@ -94,8 +94,23 @@ public class ArticleServiceImpl implements IArticleService {
      */
     public Page<ArticleEntity> findAll(int page,int size){
         Page<ArticleEntity> list = articleRepository.findAll(new PageRequest(page, size, new Sort(new Sort.Order(Sort.Direction.DESC, "time"))));
+
         return list;
     }
+
+    /**
+     * 获取某个用户的所有文章
+     * @param uid
+     * @param page
+     * @param size
+     * @return
+     */
+    /*
+    public Page<ArticleEntity> findMine(Long uid,Integer page,Integer size){
+        //分页查询当前用户下的所有文章
+        Page<ArticleEntity> list = articleRepository.getArticleByUid(uid, new PageRequest(page,size));
+        return list;
+    }*/
 
     /**
      * 查询某一篇文章信息

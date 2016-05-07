@@ -32,13 +32,13 @@ public class CateServiceTest {
      */
     @Test
     public void save(){
-        String name = "混蛋海波3";
+        String name = "Java 学习";
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String date = df.format(new Date());
         Long parent = (long)1;
 
         CateEntity cate = service.addCate(name,date,parent);
-        assert cate.getCateId() == 9;
+        System.out.println(cate.getCateId());
     }
 
     @Test

@@ -32,7 +32,7 @@ public class ArticleServiceTest {
     public void save(){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String time = df.format(new Date());
-        ArticleEntity article = service.addArticle("测试文章9", "测试文章九的内容", time,(long)3,(long)8);
+        ArticleEntity article = service.addArticle("测试文章6", "测试文章6的内容", time,(long)2,(long)2);
         System.out.println(article.getArticleId()+"\t"+article.getUser());
     }
     /**
@@ -59,12 +59,21 @@ public class ArticleServiceTest {
     @Test
     public void findall(){
         //查询第几页,每页有多少数据
-        Page<ArticleEntity> page = service.findAll(0,3);
+        Page<ArticleEntity> page = service.findAll(0,4);
         System.out.println(page.getSize());
         for (ArticleEntity article : page){
             System.out.println(article.getArticleId()+"\t"+article.getArticleName()+"\t"+article.getUser().getUserName());
         }
     }
+
+    /*@Test
+    public void findMine(){
+        Page<ArticleEntity> page = service.findMine((long) 3,0,3);
+        System.out.println(page.getSize());
+        for (ArticleEntity article : page){
+            System.out.println(article.getArticleId()+"\t"+article.getArticleName()+"\t"+article.getUser().getUserName());
+        }
+    }*/
     /**
      * 查询某一篇文章
      */

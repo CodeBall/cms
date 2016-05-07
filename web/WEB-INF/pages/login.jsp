@@ -3,6 +3,7 @@
   User: xqq
   Date: 16-5-4
   Time: 上午9:11
+  Content:登录页面
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -19,7 +20,8 @@
   </div>
   <div class="login_form">
     <!--这里还没有写向哪里提交数据-->
-    <form action="" method="post">
+    <form action="/login" method="post">
+      <p style="color: red">${status}</p>
       <div class="form-group">
         <label for="InputEmail">Email address</label>
         <input type="email" class="form-control" id="InputEmail" name="email" placeholder="Email">

@@ -12,6 +12,7 @@ import java.util.Map;
  */
 public interface IUserService {
     UserEntity getOne(String email);
+    UserEntity getUserById(Long id);
     UserEntity addUser(String userName,String password,String email);
     Boolean updateUser(Map<String,String>map);
     Page<UserEntity> findAll(int page,int size);

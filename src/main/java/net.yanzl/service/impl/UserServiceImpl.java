@@ -75,8 +75,18 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     public Page<UserEntity> findAll(int page,int size){
-        Page<UserEntity> list = userRepository.findAll(new PageRequest(page,size));
+        Page<UserEntity> list = userRepository.findAll(new PageRequest(page, size));
         return list;
+    }
+
+    /**
+     * 根据用户id查询用户信息
+     * @param id
+     * @return
+     */
+    public UserEntity getUserById(Long id){
+        UserEntity user = userRepository.getUserByUserId(id);
+        return user;
     }
 
     /**

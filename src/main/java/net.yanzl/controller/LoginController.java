@@ -45,7 +45,7 @@ public class LoginController {
 
         if(user == null || user.getPassword() == null){
             //跳转到登录失败页面
-            map.addAttribute("status","用户名或密码不能为空!");
+            map.addAttribute("status","用户名或密码错误!");
             return "login";
         }
 

@@ -41,7 +41,7 @@ public class UserController {
 
         String email = request.getParameter("email");
 
-        UserEntity user = userService.addUser(userName,password,email);
+        UserEntity user = userService.addUser(userName, password, email);
 
         if(user == null){
             map.addAttribute("status","注册失败!");
@@ -59,12 +59,16 @@ public class UserController {
     }
 
     /**
-     * 注意:还没有测试该用例
      * 管理员添加用户界面,添加完成后不会自动登录,而是进入状态页面
      * @return
      */
+    @RequestMapping(value = "/addOne",method = RequestMethod.POST)
     public String addUser(ModelMap map,String username,String password,String email){
 
+        if(username.isEmpty() || password.isEmpty() || email.isEmpty()){
+            map.addAttribute("status","新用户添加失败,用户名,密码和邮箱必不可少!");
+            return "status";
+        }
         UserEntity user = userService.addUser(username,password,email);
 
         if(user == null){
@@ -73,45 +77,82 @@ public class UserController {
         }
         else{
             //添加成功
-            map.addAttribute("status","新用户添加成功");
+            map.addAttribute("status", "新用户添加成功");
         }
         return "status";
     }
 
+    /**
+     * 添加用户页面调用方法
+     * @return
+     */
+    @RequestMapping(value = "add/",method = RequestMethod.GET)
+    public String addUser(){
+        return "user/addUser";
+    }
     /**
      * 删除用户
      * @param id
      * @return
      */
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
-    public @ResponseBody boolean deleteUser(@PathVariable Long id){
-        if(userService.deleteUser(id))
-            return true;
-        else
-            return false;
+    public String deleteUser(@PathVariable Long id,ModelMap map){
+        if(userService.deleteUser(id)) {
+            map.addAttribute("status","删除该用户成功");
+        }
+        else{
+            map.addAttribute("status","删除该用户失败");
+        }
+        return "status";
     }
 
     /**
+     * 修改用户信息调取界面方法
+     * @param id
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/update/{id}",method = RequestMethod.GET)
+    public String updateUser(@PathVariable Long id,ModelMap map){
+        UserEntity user = userService.getUserById(id);
+        map.addAttribute("user",user);
+        return "user/update";
+    }
+    /**
      * 修改用户
      * @param id
-     * @param request
      * @return
      */
     @RequestMapping(value = "/update/{id}",method = RequestMethod.POST)
-    public @ResponseBody boolean updateUser(@PathVariable Long id,HttpServletRequest request){
+    public String updateUser(ModelMap rnt,@PathVariable Long id,String username,String password,String email){
+
+        System.out.println(username);
+        System.out.println(password);
+        System.out.println(email);
+        if (username.isEmpty() || password.isEmpty() || email.isEmpty()){
+            rnt.addAttribute("status","请填写完整的用户信息!");
+            UserEntity user = userService.getUserById(id);
+            rnt.addAttribute("user", user);
+            return "user/update";
+        }
+
         Map<String,String> map = new HashMap<String, String>();
+
         map.put("id",String.valueOf(id));
 
-        map.put("userName",request.getParameter("userName"));
+        map.put("userName",username);
 
-        map.put("password",request.getParameter("password"));
+        map.put("password",password);
 
-        map.put("email",request.getParameter("email"));
+        map.put("email", email);
+
 
         if(userService.updateUser(map))
-            return true;
+            rnt.addAttribute("status","修改用户信息成功");
         else
-            return false;
+            rnt.addAttribute("status","修改用户信息失败");
+
+        return "status";
     }
 
     /**
@@ -121,13 +162,12 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/{page}/{size}",method = RequestMethod.GET)
-    public @ResponseBody Map<String,Object> findAll(@PathVariable int page,@PathVariable int size){
-        Map<String,Object> rnt = new HashMap<String, Object>();
-        Page<UserEntity> users = userService.findAll(page,size);
+    public String findAll(ModelMap map,@PathVariable int page,@PathVariable int size){
+        Page<UserEntity> users = userService.findAll(page-1,size);
 
         if (users == null || !users.hasContent()){
-            rnt.put("status",0);
-            return rnt;
+            map.addAttribute("status",0);
+            return "user/userList";
         }
 
         List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
@@ -140,9 +180,14 @@ public class UserController {
 
             list.add(one);
         }
+        map.addAttribute("page", page);
+        map.addAttribute("posts", list);
+        map.addAttribute("status", 1);
+        return "user/userList";
+    }
 
-        rnt.put("posts", list);
-        rnt.put("status", 1);
-        return rnt;
+    @RequestMapping(value = "/mine",method = RequestMethod.GET)
+    public String findMine(){
+        return "user/mine";
     }
 }

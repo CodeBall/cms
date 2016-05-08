@@ -28,4 +28,11 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query("SELECT u FROM UserEntity u WHERE u.userName = :userName")
     UserEntity getUserByUserName(@Param("userName")String userName);
 
+    /**
+     * 根据用户id查找用户
+     * @param userId
+     * @return
+     */
+    @Query("SELECT u FROM UserEntity u WHERE u.userId = :userId")
+    UserEntity getUserByUserId(@Param("userId")Long userId);
 }

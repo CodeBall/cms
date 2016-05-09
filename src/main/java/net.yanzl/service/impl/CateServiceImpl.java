@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -82,7 +83,7 @@ public class CateServiceImpl implements ICateService {
     }
 
     /**
-     * 查找所有分类
+     * 分页查找所有分类
      * @param page
      * @param size
      * @return
@@ -92,4 +93,20 @@ public class CateServiceImpl implements ICateService {
         return list;
     }
 
+    /**
+     * 一次性查询所有分类
+     * @return
+     */
+    public List<CateEntity> getAll(){
+        return cateRepository.findAll();
+    }
+
+    /**
+     * 查询某一个分类
+     * @param cateId
+     * @return
+     */
+    public CateEntity getCate(Long cateId){
+        return cateRepository.getCateByCateId(cateId);
+    }
 }

@@ -78,10 +78,10 @@
       </ul>
       <ul class="nav nav-sidebar">
         <li class="active"><a href="#">分类管理 <span class="sr-only">(current)</span></a></li>
-        <li><a href="">
+        <li><a href="/cate/1/10">
           <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 所有分类
         </a></li>
-        <li><a href="">
+        <li><a href="/cate/add">
           <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 添加分类
         </a></li>
       </ul>

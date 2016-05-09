@@ -125,10 +125,6 @@ public class UserController {
      */
     @RequestMapping(value = "/update/{id}",method = RequestMethod.POST)
     public String updateUser(ModelMap rnt,@PathVariable Long id,String username,String password,String email){
-
-        System.out.println(username);
-        System.out.println(password);
-        System.out.println(email);
         if (username.isEmpty() || password.isEmpty() || email.isEmpty()){
             rnt.addAttribute("status","请填写完整的用户信息!");
             UserEntity user = userService.getUserById(id);

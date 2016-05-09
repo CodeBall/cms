@@ -1,11 +1,11 @@
 package net.yanzl.controller;
 
 import net.yanzl.entity.CateEntity;
-import net.yanzl.entity.UserEntity;
 import net.yanzl.service.ICateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,54 +26,102 @@ public class CateController {
     @Autowired
     private ICateService cateService;
 
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
+    public String addCate(ModelMap map){
+        List<CateEntity> cate = cateService.getAll();
+        map.addAttribute("cate",cate);
+        return "cate/addCate";
+    }
+
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public @ResponseBody boolean addCate(HttpServletRequest request){
+    public String addCate(ModelMap map,HttpServletRequest request){
 
         String cateName = request.getParameter("cateName");
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String date = df.format(new Date());
+        String par = request.getParameter("parent");
 
-        Long parent = Long.parseLong(request.getParameter("parent"));
+        if (cateName.isEmpty() || par.isEmpty()){
+            map.addAttribute("status","请将分类信息填写完整");
+            return "cate/addCate";
+        }
+        Long parent = Long.parseLong(par);
+
 
         CateEntity cate = cateService.addCate(cateName,date,parent);
 
         if(cate == null)
-            return false;
+            map.addAttribute("status","添加分类信息失败");
         else
-            return true;
+            map.addAttribute("status","添加分类信息成功");
+
+        return "status";
     }
 
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
-    public @ResponseBody boolean deleteCate(@PathVariable Long id){
+    public String deleteCate(ModelMap map,@PathVariable Long id){
         if(cateService.deleteCate(id))
-            return true;
+            map.addAttribute("status","删除成功!");
         else
-            return false;
+            map.addAttribute("status","删除失败!");
+
+        return "status";
     }
 
-    @RequestMapping(value = "update/{id}",method = RequestMethod.POST)
-    public @ResponseBody boolean updateCate(@PathVariable Long id,HttpServletRequest request){
-        Map<String,String> map = new HashMap<String, String>();
-        map.put("id",String.valueOf(id));
 
-        map.put("name",request.getParameter("cateName"));
-        map.put("parent",request.getParameter("parent"));
+    /**
+     * 调取更新文章分类页面
+     * @param map
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "update/{id}",method = RequestMethod.GET)
+    public String updateCate(ModelMap map,@PathVariable Long id){
+        CateEntity cate = cateService.getCate(id);
+        map.addAttribute("cate",cate);
+        return "cate/update";
+    }
+
+    /**
+     * 文章分类更新操作
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "update/{id}",method = RequestMethod.POST)
+    public String updateCate(ModelMap rnt,@PathVariable Long id,String catename,String parent){
+        Map<String,String> map = new HashMap<String, String>();
+        map.put("id", String.valueOf(id));
+
+        if (catename.isEmpty()||parent.isEmpty()){
+            rnt.addAttribute("status","请填写完整的分类信息!");
+            CateEntity cate = cateService.getCate(id);
+            rnt.addAttribute("cate",cate);
+            return "cate/update";
+        }
+        map.put("name",catename);
+        map.put("parent",parent);
 
         if(cateService.updateCate(map))
-            return true;
+            rnt.addAttribute("status","修改分类信息成功");
         else
-            return false;
+            rnt.addAttribute("status","修改分类信息失败");
+        return "status";
     }
 
+    /**
+     * 获取分类信息
+     * @param page
+     * @param size
+     * @return
+     */
     @RequestMapping(value = "/{page}/{size}",method = RequestMethod.GET)
-    public @ResponseBody Map<String,Object> findAll(@PathVariable int page,@PathVariable int size){
-        Map<String,Object> rnt = new HashMap<String, Object>();
-        Page<CateEntity> cates = cateService.findAll(page,size);
+    public String findAll(ModelMap rnt,@PathVariable int page,@PathVariable int size){
+        Page<CateEntity> cates = cateService.findAll(page-1,size);
 
         if (cates == null || !cates.hasContent()){
             rnt.put("status",0);
-            return rnt;
+            return "cate/cateList";
         }
 
         List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
@@ -84,12 +132,11 @@ public class CateController {
             one.put("cateName",cate.getCateName());
             one.put("parent",cate.getParentId());
             one.put("date",cate.getDate());
-
             list.add(one);
         }
 
         rnt.put("posts", list);
         rnt.put("status", 1);
-        return rnt;
+        return "cate/cateList";
     }
 }

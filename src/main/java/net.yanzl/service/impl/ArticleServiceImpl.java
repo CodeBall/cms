@@ -43,8 +43,8 @@ public class ArticleServiceImpl implements IArticleService {
      * @param time
      * @return
      */
-    public ArticleEntity addArticle(String articleName,String articleContent,String time,Long uid,Long cid){
-        ArticleEntity article = new ArticleEntity(articleName,articleContent,time);
+    public ArticleEntity addArticle(String articleName,String articleContent,String time,int del,Long uid,Long cid){
+        ArticleEntity article = new ArticleEntity(articleName,articleContent,time,del);
         UserEntity user = userRepository.findOne(uid);
         CateEntity cate = cateRepository.findOne(cid);
         article.setUser(user);
@@ -81,6 +81,14 @@ public class ArticleServiceImpl implements IArticleService {
         }
         if(map.containsKey("content")){
             article.setArticleContent(map.get("content"));
+        }
+        if(map.containsKey("cate")){
+            Long cid = Long.parseLong(map.get("cate"));
+            CateEntity cate = cateRepository.findOne(cid);
+            article.setCate(cate);
+        }
+        if (map.containsKey("del")){
+            article.setDel(Integer.parseInt(map.get("del")));
         }
         articleRepository.save(article);
         return true;

@@ -59,6 +59,7 @@ public class LoginController {
             session.setAttribute("userId",user.getUserId());
             session.setAttribute("userName",user.getUserName());
             session.setAttribute("email",user.getEmail());
+
             //跳转至首页
             return "index";
         }else {

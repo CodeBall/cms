@@ -25,6 +25,7 @@
 
   <!-- Custom styles for this template -->
   <link href="../../css/index.css" rel="stylesheet" type="text/css">
+  <link href="../../css/article/addArticle.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -69,10 +70,10 @@
       </ul>
       <ul class="nav nav-sidebar">
         <li class="active"><a href="#">文章管理 <span class="sr-only">(current)</span></a></li>
-        <li><a href="">
+        <li><a href="/article/1/10">
           <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 所有文章
         </a></li>
-        <li><a href="">
+        <li><a href="/article/add">
           <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 写文章
         </a></li>
       </ul>

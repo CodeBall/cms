@@ -80,6 +80,8 @@ public class CateController {
     public String updateCate(ModelMap map,@PathVariable Long id){
         CateEntity cate = cateService.getCate(id);
         map.addAttribute("cate",cate);
+        List<CateEntity> cates = cateService.getAll();
+        map.addAttribute("cates",cates);
         return "cate/update";
     }
 

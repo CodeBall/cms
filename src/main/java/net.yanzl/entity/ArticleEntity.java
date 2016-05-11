@@ -20,11 +20,11 @@ public class ArticleEntity{
 
     public ArticleEntity(){}
 
-    public ArticleEntity(String articleName,String articleContent,String time){
+    public ArticleEntity(String articleName,String articleContent,String time,int del){
         this.articleName = articleName;
         this.articleContent = articleContent;
         this.time = time;
-        this.del = 0;
+        this.del = del;
     }
 
     @Id

@@ -39,7 +39,7 @@ public class ArticleDaoTest {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String time = df.format(new Date());
         //创建article基本对象
-        ArticleEntity article = new ArticleEntity("测试文章7","测试文章七的内容",time);
+        ArticleEntity article = new ArticleEntity("测试文章7","测试文章七的内容",time,1);
         //获取当前登陆用户
 //        UserEntity user = userRepository.findOne((long) 1);
 //        System.out.println(user.getEmail());

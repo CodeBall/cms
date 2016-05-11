@@ -32,7 +32,7 @@ public class ArticleServiceTest {
     public void save(){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String time = df.format(new Date());
-        ArticleEntity article = service.addArticle("测试文章6", "测试文章6的内容", time,(long)2,(long)2);
+        ArticleEntity article = service.addArticle("测试文章6", "测试文章6的内容", time,1,(long)2,(long)2);
         System.out.println(article.getArticleId()+"\t"+article.getUser());
     }
     /**

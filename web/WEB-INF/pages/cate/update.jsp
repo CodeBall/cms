@@ -5,6 +5,7 @@
   Time: 下午8:29
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="../Common/head.jsp" flush="true"></jsp:include>
 <div style="margin: 0;padding: 0;width: 330px;height: 50px; margin-left: 30%">
@@ -17,8 +18,12 @@
       <input type="text" class="form-control" id="InputUsername" name="catename" placeholder="${cate.cateName}">
     </div>
     <div class="form-group">
-      <label for="InputEmail">Parent</label>
-      <input type="text" class="form-control" id="InputEmail" name="parent" placeholder="${cate.parentId}">
+      <label for="InputEmail">Parent:</label>
+      <select name="parent" id="InputEmail">
+        <c:forEach items="${cates}" var="pord" varStatus="status">
+          <option value="${pord.cateId}">${pord.cateName}</option>
+        </c:forEach>
+      </select>
     </div>
     <button type="submit" class="btn btn-success btn-lg btn-block">添加</button>
   </form>
